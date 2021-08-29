@@ -1,6 +1,12 @@
 <html>
 
 <head>
+    <meta name="full-screen" content="yes">
+    <meta name="browsermode" content="application">
+    <meta name='apple-mobile-web-app-capable' content='yes' />
+    <meta name='full-screen' content='true' />
+    <meta name='x5-fullscreen' content='true' />
+    <meta name='360-fullscreen' content='true' />
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -23,6 +29,20 @@
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sprintfjs@1.2.17/sprintf.min.js"></script>
     <script>
+        addEventListener("load", function () { setTimeout(hideURLbar, 0); }, false);
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+        window.onload = function () {
+            scroll();
+        }
+
+        function scroll() {
+            if (document.documentElement.scrollHeight <= document.documentElement.clientHeight) {
+                bodyTag = document.getElementsByTagName('body')[0];
+                bodyTag.style.height = document.documentElement.clientWidth / screen.width * screen.height + 'px';
+            }
+        }
         const KEY = "7326c9c6-0891-11ec-b5bd-9cda3efd56be";
         const loadWithDefault = (key, defaultVal) => {
             const vkey = `${KEY}-${key}`;
@@ -124,12 +144,13 @@
                     this.returntime = parseInt(loadWithDefault("returntime", 0));
                     setInterval(() => {
                         this.currentTime = Math.floor(luxon.DateTime.now().toSeconds());
-                    }, 800);
+                    }, 500);
                 }
             })
         });
         // document.onload = ;
     </script>
+    <script src="js/hide-address-bar.js"></script>
 </head>
 
 <body>
