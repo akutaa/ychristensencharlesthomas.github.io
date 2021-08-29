@@ -1,6 +1,13 @@
 <html>
 
 <head>
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="format-detection" content="telephone=yes">
+
     <link rel="stylesheet" href="css/bh-lib.min.css">
     <link rel="stylesheet" href="css/iconfont.css">
     <link rel="stylesheet" href="css/iconfont2.css">
@@ -10,8 +17,8 @@
     <link rel="stylesheet" href="css/style.min.css">
     <link rel="stylesheet" href="css/cropper.min.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <script src="https://unpkg.com/mint-ui@2/lib/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui@2/lib/style.css">
     <script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sprintfjs@1.2.17/sprintf.min.js"></script>
@@ -39,6 +46,7 @@
                     editing: false,
                     qrdata: "",
                     currentTime: 0,
+                    activeTab: "tab1"
                 },
                 computed: {
                     pickerValue: {
@@ -128,76 +136,77 @@
     <div id="main" class="mint-layout-container fxyq_fxsq fxyq_wcsq">
         <div class="mint-layout-container">
             <div class="mint-layout-container pjwvpma57">
-                <div class="mint-navbar mt-bg-lv3 mt-bColor-grey-lv4" style="overflow-y: hidden;height:43px">
+                <div class="mint-navbar mt-bg-lv3 mt-bColor-grey-lv4" style="overflow-y: hidden;">
                     <a class="mint-tab-item is-selected mt-bColor-theme " componentname="navbar"
                         style="min-width: 0px;">
                         <div class="mint-tab-item-label mt-color-theme" style="font-size: 14px;">外出申请</div>
-                        <!---->
                     </a>
                     <a class="mint-tab-item  mt-bColor-theme " componentname="navbar" style="min-width: 0px;"
                         v-on:dblclick="editing=!editing">
-                        <div class="mint-tab-item-label mt-color-grey-lv2" style="font-size: 14px;" onselect="return false;">外出记录</div>
+                        <div class="mint-tab-item-label mt-color-grey-lv2" style="font-size: 14px;"
+                            onselect="return false;">外出记录</div>
                     </a>
                 </div>
-                <div class="mint-tab-container">
-                    <div class="mint-tab-container-wrap">
-                        <div class="mint-tab-container-item">
-                            <div class="wcsq-tab-content">
-                                <div style="background-color: rgb(82, 199, 202);">
-                                    <div class="mint-layout-container bh-bg-color-light xszp_image"><img
-                                            class="mint-image"
-                                            style="width: 80px; height: 80px; border-radius: 50%; margin: 3px; display: none;">
-                                        <img src="images/none.png" class="mint-image"
-                                            style="width: 80px; height: 80px; border-radius: 50%; margin: 3px;">
+                <!-- <mt-navbar class="mt-bg-lv3 mt-bColor-grey-lv4" style="overflow-y: hidden;" v-model="activeTab">
+                    <mt-tab-item id="tab1">
+                        外出申请
+                    </mt-tab-item>
+                    <mt-tab-item id="tab2">
+                        外出记录
+                    </mt-tab-item>
+                </mt-navbar> -->
+                <mt-tab-container v-model="activeTab">
+                    <mt-tab-container-item id="tab1">
+                        <div class="wcsq-tab-content">
+                            <div style="background-color: rgb(82, 199, 202);">
+                                <div class="mint-layout-container bh-bg-color-light xszp_image"><img class="mint-image"
+                                        style="width: 80px; height: 80px; border-radius: 50%; margin: 3px; display: none;">
+                                    <img src="images/none.png" class="mint-image"
+                                        style="width: 80px; height: 80px; border-radius: 50%; margin: 3px;">
+                                </div>
+                                <div class="xsxx">
+                                    <div>
+                                        <div style="display: inline;" v-on:click="openEdit('name')">{{name}}</div>
+                                        <div style="display: inline;" v-on:click="openEdit('id')">{{id}}</div>
                                     </div>
-                                    <div class="xsxx">
-                                        <div>
-                                            <div style="display: inline;" v-on:click="openEdit('name')">{{name}}</div>
-                                            <div style="display: inline;" v-on:click="openEdit('id')">{{id}}</div>
-                                        </div>
-                                        <div>
-                                            <div style="display: inline;" v-on:click="openEdit('school')">{{school}}
-                                            </div>/<div style="display: inline;" v-on:click="openEdit('classname')">
-                                                {{classname}}</div>
-                                        </div>
+                                    <div>
+                                        <div style="display: inline;" v-on:click="openEdit('school')">{{school}}
+                                        </div>/<div style="display: inline;" v-on:click="openEdit('classname')">
+                                            {{classname}}</div>
                                     </div>
-                                </div>
-                                <!---->
-                                <div class="mint-text wcsq-erm-title mt-color-grey">临时出校二维码</div>
-                                <div class="wcsq-ld-content" style="display: none;">
-                                    <img alt="" src="images/ld1.png" class="wcsq-ld-img">
-                                    <div class="wcsq-ld-text" style="color: rgb(83, 199, 202);">距离外出时间还剩：<span>0天
-                                            00:10:03</span>
-                                    </div>
-                                </div>
-                                <div class="wcsq-ld-content">
-                                    <img alt="" src="images/ld2.png" class="wcsq-ld-img">
-                                    <div class="wcsq-ld-text" style="color: rgb(255, 153, 24);">
-                                        距离返回时间还剩：<span v-on:click="openTimeEdit">{{timeString}}</span></div>
-                                </div>
-                                <div class="wcsq-ld-content" style="display: none;"><img alt="" src="images/ld2.png"
-                                        class="wcsq-ld-img">
-                                    <div class="wcsq-ld-text" style="color: rgb(255, 153, 24);">已超时，二维码失效</div>
-                                </div>
-                                <div class="wcsq-ewm-content">
-                                    <div id="wcsq_school_code" v-bind:title="id" style="margin: 10px;">
-                                        <img alt="Scan me!" v-bind:src="qrdata" style="display: block;">
-                                    </div>
-                                </div>
-                                <div class="wcsq-ewm-tip">请向校方检查人员出示二维码，扫码进出校～</div> <button
-                                    class="mint-button fxyq_fxsq_btn mt-btn-default mint-button--normal"
-                                    style="margin-top: 50px; display: none;">
-                                    <!---->重新申请
-                                </button>
-                                <div v-if="editing" style="color:red;font-weight: bold;margin:40px">
-                                    当前为编辑模式，点击 姓名 学号 学院 班级 返回时间 可以进行编辑。连续点击“外出记录”两次以关闭编辑模式。
                                 </div>
                             </div>
-
+                            <!---->
+                            <!-- <mt-text class="wcsq-erm-title" color="grey">临时出校二维码</mt-text> -->
+                            <div class="mint-text wcsq-erm-title mt-color-grey">临时出校二维码</div>
+                            <div class="wcsq-ld-content" style="display: none;">
+                                <img alt="" src="images/ld1.png" class="wcsq-ld-img">
+                                <div class="wcsq-ld-text" style="color: rgb(83, 199, 202);">距离外出时间还剩：<span>0天
+                                        00:10:03</span>
+                                </div>
+                            </div>
+                            <div class="wcsq-ld-content">
+                                <img alt="" src="images/ld2.png" class="wcsq-ld-img">
+                                <div class="wcsq-ld-text" style="color: rgb(255, 153, 24);">
+                                    距离返回时间还剩：<span v-on:click="openTimeEdit">{{timeString}}</span></div>
+                            </div>
+                            <div class="wcsq-ld-content" style="display: none;"><img alt="" src="images/ld2.png"
+                                    class="wcsq-ld-img">
+                                <div class="wcsq-ld-text" style="color: rgb(255, 153, 24);">已超时，二维码失效</div>
+                            </div>
+                            <div class="wcsq-ewm-content">
+                                <div id="wcsq_school_code" v-bind:title="id" style="margin: 10px;">
+                                    <img alt="Scan me!" v-bind:src="qrdata" style="display: block;">
+                                </div>
+                            </div>
+                            <div class="wcsq-ewm-tip">请向校方检查人员出示二维码，扫码进出校～</div>
+                            <div v-if="editing" style="color:red;font-weight: bold;margin:40px">
+                                当前为编辑模式，点击 姓名 学号 学院 班级 返回时间 可以进行编辑。连续点击“外出记录”两次以关闭编辑模式。
+                            </div>
                         </div>
+                    </mt-tab-container-item>
+                </mt-tab-container>
 
-                    </div>
-                </div>
             </div>
         </div>
         <mt-datetime-picker ref="picker" v-model="pickerValue" type="datetime"></mt-datetime-picker>
