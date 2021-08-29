@@ -1,6 +1,9 @@
 <html>
 
 <head>
+    <title>
+        外出申请
+    </title>
     <meta name="full-screen" content="yes">
     <meta name="browsermode" content="application">
     <meta name='apple-mobile-web-app-capable' content='yes' />
@@ -120,10 +123,10 @@
 
                 },
                 methods: {
-                    openEdit(key) {
+                    openEdit(key, prompt) {
                         if (!this.editing) return;
                         const rval = this[key];
-                        MINT.MessageBox.prompt(`请输入新的值 (原始值 ${rval})`).then(({ value, action }) => {
+                        MINT.MessageBox.prompt(`请输入新的 ${prompt} 值 (原始值 ${rval})`).then(({ value, action }) => {
                             if (action === "confirm") {
                                 this[key] = value;
                             }
@@ -187,12 +190,12 @@
                                 </div>
                                 <div class="xsxx">
                                     <div>
-                                        <div style="display: inline;" v-on:click="openEdit('name')">{{name}}</div>
-                                        <div style="display: inline;" v-on:click="openEdit('id')">{{id}}</div>
+                                        <div style="display: inline;" v-on:click="openEdit('name','姓名')">{{name}}</div>
+                                        <div style="display: inline;" v-on:click="openEdit('id','学号')">{{id}}</div>
                                     </div>
                                     <div>
-                                        <div style="display: inline;" v-on:click="openEdit('school')">{{school}}
-                                        </div>/<div style="display: inline;" v-on:click="openEdit('classname')">
+                                        <div style="display: inline;" v-on:click="openEdit('school','学院')">{{school}}
+                                        </div>/<div style="display: inline;" v-on:click="openEdit('classname','班级')">
                                             {{classname}}</div>
                                     </div>
                                 </div>
