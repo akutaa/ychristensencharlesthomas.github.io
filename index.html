@@ -228,13 +228,13 @@
         <div class="mint-layout-container">
             <div class="mint-layout-container pjwvpma57">
                 <div class="mint-navbar mt-bg-lv3 mt-bColor-grey-lv4" style="overflow-y: hidden;">
-                    <a class="mint-tab-item mt-bColor-theme" v-bind:class="[activeTab==='tab1'?'is-selected':null]"
+                    <a class="mint-tab-item mt-bColor-theme" v-bind:class="[activeTab!=='tab1'?'is-selected':null]"
                         componentname="navbar" style="min-width: 0px;">
                         <div class="-mint-tab-item-label"
                             v-bind:class="[activeTab==='tab1'?' mt-color-theme':'mt-color-grey-lv2']"
                             style="font-size: 14px;" v-on:click="activeTab='tab1'">外出申请</div>
                     </a>
-                    <a class="mint-tab-item  mt-bColor-theme" v-bind:class="[activeTab==='tab2'?'is-selected':null]"
+                    <a class="mint-tab-item  mt-bColor-theme" v-bind:class="[activeTab!=='tab2'?'is-selected':null]"
                         componentname="navbar" style="min-width: 0px;">
                         <div class="-mint-tab-item-label"
                             v-bind:class="[activeTab==='tab2'?' mt-color-theme':'mt-color-grey-lv2']"
